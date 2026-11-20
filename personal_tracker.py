@@ -2,6 +2,7 @@ import re
 
 
 def main():
+    projects = []
 
     userInput = input("Register or log in").lower().strip()
 
@@ -17,11 +18,12 @@ def main():
         userPassword = input("Enter your password: ")
         if verify(userEmail, "password", "register") == None:
             continue
-        log_in()
-
-
-
-
+        else:
+            break
+    
+    userCommand = log_in().strip().lower()
+    if userCommand == "projects":
+        projects_menu()
 
 
 
@@ -63,6 +65,22 @@ def log_in():
 
     return user_command
 
+
+def projects_menu(projects, names_or_id):
+
+    if names_or_id[0] == "names":
+        project_names = []
+        for project in projects:
+            project_names.append(project['title'])
+
+        return project_names
+
+    elif names_or_id[0] == "id":
+        for project in projects:
+            if project['id'] == names_or_id[1]:
+                return project
+
+            else: return None
 
 
 

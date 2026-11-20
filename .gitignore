@@ -1,0 +1,22 @@
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Local credentials and runtime data
+.env
+.env.*
+!.env.example
+/data/
+/cache/
+*.local.json
+/users.json
+/projects.json
+/tasks.json
+/cache.json
+
+# macOS
+.DS_Store

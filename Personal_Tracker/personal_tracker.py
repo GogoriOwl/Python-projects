@@ -16,14 +16,26 @@ def main():
 
     while True:
         userPassword = input("Enter your password: ")
-        if verify(userEmail, "password", "register") == None:
+        if verify(userEmail, "password", "register") == False:
             continue
         else:
             break
     
     userCommand = log_in().strip().lower()
+
     if userCommand == "projects":
-        projects_menu()
+        project_list = projects_search(projects, "names")
+
+        if project_list == None:
+            pass
+
+        project_command = in_prject_menu()
+
+        if project_command == "add project":
+            add_project()
+
+
+
 
 
 
@@ -32,11 +44,12 @@ def main():
 
 def verify(input, emailOrPass, logInOrReg):
     if emailOrPass == "email" and logInOrReg == "register":
-        verif = re.search("[a-zA-Z]+[0-9]+?@[aA-zZ]+", input) and input.endswith(".com")
+        verif = re.search("[a-zA-Z]+[0-9]+@[aA-zZ]+", input) and input.endswith(".com")
         return verif
 
     elif emailOrPass == "pass" and logInOrReg == "register":
-        verif = re.search("[a-zA-Z]+[0-9]+?{8}", input) and input.endswith(".com")
+        verif = len(emailOrPass) >= 6
+        print(verif)
         return verif
 
 
@@ -66,12 +79,17 @@ def log_in():
     return user_command
 
 
-def projects_menu(projects, names_or_id):
+def projects_search(projects, names_or_id):
 
-    if names_or_id[0] == "names":
+    if names_or_id == "names":
         project_names = []
-        for project in projects:
-            project_names.append(project['title'])
+
+        if len(projects) == 0:
+            return None
+
+        else:
+            for project in projects:
+                project_names.append(project['title'])
 
         return project_names
 
@@ -83,5 +101,28 @@ def projects_menu(projects, names_or_id):
             else: return None
 
 
+def in_prject_menu():
+    possible_commands = ["add project", "edit ptoject", "enter project", "sort projects", "filter projects"]
+
+    print('''
+    1.Add project
+    2.Edit project
+    3.Enter project
+    4.Sort projects
+    5.Filter projects
+        ''')
+
+    while True:
+        user_command = input("Enter command: ")
+
+        if user_command not in possible_commands:
+            print("invalid command")
+            continue
+        else:
+            return user_command
+
+
+def add_project():
+    
 
 main()
